@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: homesteader   # ✅ your project name
+
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .jsp
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/HomesteaderDB
+    username: postgres
+    password: 7756990677@sumit
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB

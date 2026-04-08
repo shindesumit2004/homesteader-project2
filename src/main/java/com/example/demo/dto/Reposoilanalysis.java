@@ -1,10 +1,11 @@
-package com.example.demo;
+package com.example.demo.dto;
 
 import java.util.List;
 
+import com.example.demo.entity.soilanalysis_Enitty;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Reposoilanalysis extends JpaRepository<soilanalysis_Enitty , Integer>
+public interface Reposoilanalysis extends JpaRepository<soilanalysis_Enitty, Integer>
 {
 	//Soil Report gate by date
 	List<soilanalysis_Enitty> findBySdateBetween(java.util.Date startdate,java.util.Date enddate);

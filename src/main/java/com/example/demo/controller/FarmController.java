@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 
 
@@ -9,16 +9,15 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 
+import com.example.demo.entity.*;
+import com.example.demo.services.farmService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Admin.blog;
 import com.example.demo.Admin.serviceadmin;
@@ -36,7 +35,7 @@ public class FarmController {
 	                                      //Shree Ganesha
 	//Farmer Service
 	@Autowired
-	farmService fs;
+										  farmService fs;
 	
 	
 	//Agro Service
@@ -87,8 +86,9 @@ public class FarmController {
 	
 	
 	//Mapping For Register Farmer Data
+	@Operation(description = "Register Foor ")
 	@PostMapping("/regfarmer")
-	public String  regfarmer(@ModelAttribute("c1") farmerEntity c1,@RequestParam("email") String email,ModelMap m,HttpSession h1) {
+	public String  regfarmer(@ModelAttribute("c1") farmerEntity c1, @RequestParam("email") String email, ModelMap m, HttpSession h1) {
 	
 	//Method for Avoid Dublicate Email
 	farmerEntity a=fs.checkemail(email);

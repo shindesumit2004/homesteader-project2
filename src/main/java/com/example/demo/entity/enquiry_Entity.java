@@ -1,15 +1,12 @@
-package com.example.demo;
+package com.example.demo.entity;
 
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class enquiry_Entity {

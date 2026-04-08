@@ -42,15 +42,15 @@
                             <h4 class="text-white mb-4">Get In Touch</h4>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-geo-alt text-white me-2"></i>
-                                <p class="text-white mb-0">Congress Bhavan, B-1, 2nd Floor, Abhinav Apartment Besides, Congress House Rd, Shivajinagar, Pune, Maharashtra 411005</p>
+                                <p class="text-white mb-0">Waje bridge, B-1, 2nd Floor, snehdeep Apartment Besides, warje, Pune, Maharashtra 411058</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-envelope-open text-white me-2"></i>
-                                <p class="text-white mb-0">gauravpatilgr13@gmail.com</p>
+                                <p class="text-white mb-0">sarvadnyaagency@gmail.com</p>
                             </div>
                             <div class="d-flex mb-2">
                                 <i class="bi bi-telephone text-white me-2"></i>
-                                <p class="text-white mb-0">9834583904</p>
+                                <p class="text-white mb-0">904-908-909-7</p>
                             </div>
                             <div class="d-flex mt-4">
                                 <a class="btn btn-secondary btn-square rounded-circle me-2" href="https://twitter.com/GauravPatilGR"><i class="fab fa-twitter"></i></a>
@@ -92,7 +92,7 @@
     </div>
     <div class="container-fluid bg-dark text-white py-4">
         <div class="container text-center">
-            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">HomeSteaderIndia.Com</a>. All Rights Reserved. Designed And Developed by <a class="text-secondary fw-bold" href="https://www.linkedin.com/in/gauravpatil13/">Gaurav Patil</a></p>
+            <p class="mb-0">&copy; <a class="text-secondary fw-bold" href="#">HomeSteaderIndia.Com</a>. All Rights Reserved. Designed And Developed by <a class="text-secondary fw-bold" href="https://www.linkedin.com/in/gauravpatil13/">sarvdnyaagency</a></p>
         </div>
     </div>
     <!-- Footer End -->

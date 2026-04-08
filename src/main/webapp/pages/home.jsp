@@ -429,7 +429,7 @@
                             <div class="position-relative">
                                 <img class="img-fluid w-100" src="img/team12.png" alt="" style="height: 400px;">
                                 <div class="position-absolute start-0 bottom-0 w-100 py-3 px-4" style="background: rgba(52, 173, 84, .85);">
-                                    <h4 class="text-white">Rohit Waghmare</h4>
+                                    <h4 class="text-white">Chandrakant</h4>
                                     <span class="text-white">Professional Farmer Trainer</span>
                                 </div>
                             </div>

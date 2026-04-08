@@ -1,15 +1,19 @@
-package com.example.demo.weather;
+package com.example.demo.controller;
 
+import com.example.demo.weather.Weather;
+
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
+@Controller
 
 public class WeatherController {
 	
 	//Mapping for Weather API
+    @Operation(description = "Data about weather")
 	@GetMapping("/getWeather")
     public Weather getWeather(@RequestParam("city") String city) {
 				

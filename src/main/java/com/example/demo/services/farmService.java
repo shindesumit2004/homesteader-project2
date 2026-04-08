@@ -1,11 +1,11 @@
-package com.example.demo;
+package com.example.demo.services;
 
 import java.util.*;
 
-import com.example.demo.Agroagency.product;
+import com.example.demo.entity.*;
 
 public interface farmService {
-	
+
 	//Service for Farmer Registration
 	void Register(farmerEntity f1);
 	

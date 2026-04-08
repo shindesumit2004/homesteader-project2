@@ -75,7 +75,7 @@
                             </div>
                            <div class="ps-3">
                                 <h5 class="text-white">Email Us</h5>
-                                <span class="text-white">gauravpatilgr13@gmail.com</span>
+                                <span class="text-white">sarvadnyaagency@gmail.com</span>
                             </div>
                         </div>
                         <div class="d-flex">
@@ -84,7 +84,7 @@
                             </div>
                             <div class="ps-3">
                                 <h5 class="text-white">Call Us</h5>
-                                <span class="text-white">+91 9834583904</span>
+                                <span class="text-white">+91 904-908-909-7</span>
                             </div>
                         </div>
                     </div>

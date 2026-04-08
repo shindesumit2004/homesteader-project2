@@ -2,9 +2,6 @@ package com.example.demo.Admin;
 
 import java.util.List;
 
-import com.example.demo.soilanalysis_Enitty;
-import com.example.demo.Agroagency.agroEntity;
-
 public interface serviceadmin {
 
 	

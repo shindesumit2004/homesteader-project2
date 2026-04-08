@@ -1,13 +1,16 @@
-package com.example.demo;
+package com.example.demo.dao;
 
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.annotations.FilterDefs;
+import com.example.demo.entity.RepositoryContactEnity;
+import com.example.demo.dto.Reposoilanalysis;
+import com.example.demo.entity.RepostudntTrainingEntity;
+import com.example.demo.entity.*;
+import com.example.demo.repository.farmRepository;
+import com.example.demo.services.farmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.Agroagency.product;
 
 @Service
 public class farmDao implements farmService {
