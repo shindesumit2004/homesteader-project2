@@ -1,16 +1,9 @@
 package com.example.demo.controller;
 
-
-
-
 import java.util.List;
 
+import jakarta.servlet.http.HttpSession;
 
-import javax.servlet.http.HttpSession;
-
-
-import com.example.demo.entity.*;
-import com.example.demo.services.farmService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,128 +12,78 @@ import org.springframework.ui.ModelMap;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.Admin.blog;
-import com.example.demo.Admin.serviceadmin;
-import com.example.demo.Agroagency.agroEntity;
-import com.example.demo.Agroagency.product;
-import com.example.demo.Agroagency.serviceagro;
-
-
+import com.example.demo.entity.Blog;
+import com.example.demo.service.AdminService;
+import com.example.demo.entity.Agro;
+import com.example.demo.entity.Product;
+import com.example.demo.service.AgroService;
+import com.example.demo.entity.*;
+import com.example.demo.service.FarmService;
 
 
 @Controller
 public class FarmController {
 	private int cnt;
 	
-	                                      //Shree Ganesha
-	//Farmer Service
 	@Autowired
-										  farmService fs;
-	
-	
-	//Agro Service
+	private FarmService farmService;
 	@Autowired
-	serviceagro sa;
-	
-	//Admin Service
+	private AgroService agroService;
 	@Autowired
-	serviceadmin saa;
+	private AdminService adminService;
                                            
-	
-	
-	//Mapping For HomePage
+	///Mapping For HomePage
 	@RequestMapping("/farm")
 	public String Home(ModelMap mm) {
-		
-		//for Product
-	    List<product> pl=sa.showallpage();
-	    
-	    mm.addAttribute("k",pl);
-	    
-		//for Blog
-        List<blog> b=saa.showallblog();
-		
+		///for Product
+	    List<Product> pl=agroService.showallpage();
+		mm.addAttribute("k",pl);
+		///for Blog
+        List<Blog> b=adminService.showallblog();
 		mm.addAttribute("kk",b);
-		
-		
 		return "index";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	//Mapping For Register Page
+	///Mapping For Register Page
 	@RequestMapping("/register")
 	public String Register() {
-		
-		
-		
 		return"register";
 	}
 	
-	
-	
-	
-	//Mapping For Register Farmer Data
+	///Mapping For Register Farmer Data
 	@Operation(description = "Register Foor ")
 	@PostMapping("/regfarmer")
-	public String  regfarmer(@ModelAttribute("c1") farmerEntity c1, @RequestParam("email") String email, ModelMap m, HttpSession h1) {
-	
-	//Method for Avoid Dublicate Email
-	farmerEntity a=fs.checkemail(email);
+	public String  regfarmer(@ModelAttribute("c1") Farmer c1, @RequestParam("email") String email, ModelMap m, HttpSession h1) {
+
+	///Method for Avoid Dublicate Email
+	Farmer a=farmService.checkemail(email);
 	
 	if(a==null)
 	{
-	
-         cnt++;
-	    
-	    h1.setAttribute("cnt", cnt);
-		fs.Register(c1);
-		
-	
+		cnt++;
+		h1.setAttribute("cnt", cnt);
+		farmService.Register(c1);
+
 		return "login";
-		
-		
 	}
-	 
-	    
-	  
-	  return "register";
-	
-		
+	    return "register";
 	}
-	
-	
-	
-	//Mapping For Login Page
+
+	///Mapping For Login Page
 	@RequestMapping("/login")
 	public String Login() {
-		
-		
 		return "login";
 	}
 	
-	
-	
-	
-	
-	//Mapping For Cheking Login Details And Session
+	///Mapping For Cheking Login Details And Session
 	@PostMapping("/loginfarm")
 	public String logincheck(@RequestParam("email") String email,@RequestParam("password") String password,HttpSession h1) {
-		
-	 farmerEntity a=fs.logindetails(email, password);
+		Farmer a=farmService.logindetails(email, password);
 	 
 	 if(a==null) 
 	 {
-		 
 		 return "redirect:/login";
-		 
 	 }
-	 
 	 else
 	 {
 		 //Session get
@@ -155,328 +98,209 @@ public class FarmController {
 		h1.setAttribute("id", a.getId());
 		h1.setAttribute("password", a.getPassword());
 	
-		
-		 return "redirect:/home";
-		 
+		return "redirect:/home";
 	 }
+	}
 	 
-	         
-	 }
-	 
-	                                   //Profile of Farmer
-	
-	
-	
-	//Mapping for Farmer Profile shwoing all activities by farmers
+	 /* Profile of Farmer */
+
+	 ///Mapping for Farmer Profile shwoing all activities by farmers
 	@RequestMapping("/searchname")
 	public String profilefarmer(@RequestParam("email") String email,ModelMap mm,HttpSession h3)
 	{
-		   List<farmerEntity> l =fs.findfarmerbyemail(email);
-		   
-		   List<enquiry_Entity> l2 = fs.findenqiryfarmer(email);
-		   
-		   List<soilanalysis_Enitty> l3 =fs.findsoilfarmer(email);
-		   
-		   List<Training_Farmer> l4 =fs.findfarmertraining(email);
+		   List<Farmer> l =farmService.findfarmerbyemail(email);
+		   List<Enquiry> l2 = farmService.findenqiryfarmer(email);
+		   List<SoilAnalysis> l3 =farmService.findsoilfarmer(email);
+		   List<TrainingFarmer> l4 =farmService.findfarmertraining(email);
 		  
-		   
-		   
-		
 		   mm.addAttribute("k",l2);
-		   
 		   mm.addAttribute("kk",l);
-		   
 		   mm.addAttribute("kkk",l3);
-		   
 		   mm.addAttribute("kkkk",l4);
-		
-		return "profilefarmer";
-		
+		   return "profilefarmer";
 	}
-	
-	//Profile Page
+	///Profile Page
 	@RequestMapping("/profilefarmer")
 	public String profilepage() {
-		
-		
 		return "profilefarmer";
 	}
 	
 	
 	//Update Farmer Profile
 	@PostMapping("/setprofile")
-	public String setprofile(@ModelAttribute ("c2") farmerEntity c2)
+	public String setprofile(@ModelAttribute ("c2") Farmer c2)
 	{
-		farmerEntity f= new farmerEntity();
+		Farmer f= new Farmer();
 		f.setId(c2.getId());
 		f.setName(c2.getName());
 		f.setEmail(c2.getEmail());
 		f.setMobile(c2.getMobile());
 		f.setState(c2.getState());
-		
 		f.setCity(c2.getCity());
 		f.setVillage(c2.getVillage());
 		f.setTown(c2.getTown());
 		f.setPassword(c2.getPassword());
 		f.setSoiltype(c2.getSoiltype());
 		
-		fs.Register(f);
-		
+		farmService.Register(f);
 		return "home";
 	}
 	
-	//Generate Soil analysis PDF Anytime
+	///Generate Soil analysis PDF Anytime
 	@RequestMapping("/getpdf")
 	public String getsoildata(@RequestParam("email") String email,ModelMap mm)
 	{
-		
-		 List<soilanalysis_Enitty> l4 =fs.findsoilfarmer(email);
-		 
-		 mm.addAttribute("k",l4);
-		
-		
+		List<SoilAnalysis> l4 =farmService.findsoilfarmer(email);
+		mm.addAttribute("k",l4);
 		return "pdfget";
 	}
 	
-	//Withdraw Soil analysis Request By Farmer
+	///Withdraw Soil analysis Request By Farmer
 	@RequestMapping("/withdraw/{id}")
 	public String removesoilanalysisrequest(@PathVariable int id)
 	{
-		
-		fs.withdrawrequest(id);
-		
+		farmService.withdrawrequest(id);
 		return "redirect:/home";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Mapping For Home Page After Farmer Login and Session
+
+	///Mapping For Home Page After Farmer Login and Session
 	@RequestMapping("/home")
 	public String home(HttpSession h1,ModelMap mm) {
-		
 		String name = (String) h1.getAttribute("name");
-		
+
 		if(name==null)
 		{
 			return "redirect:/login";
 		}
-		//for Product
-	    List<product> pl=sa.showallpage();
-	    
-	    mm.addAttribute("k",pl);
+		///for Product
+	    List<Blog> pl=adminService.showallblog();
+		mm.addAttribute("k",pl);
 		    
-		//for Blog
-        List<blog> b=saa.showallblog();
-		
+		///for Blog
+        List<Blog> b=adminService.showallblog();
 		mm.addAttribute("kk",b);
-		
-		
-		
 		return "home";
 	}
-	
-	
-	
-	//Mapping For Logout And Session
+
+	///Mapping For Logout And Session
 	@RequestMapping("/logout")
 	public String logout(HttpSession h1) {
-		
 		h1.invalidate();
-		
-		
 		return "redirect:/login";
 	}
-	
-	//Mapping For Farmer Training Page
+
+	///Mapping For Farmer Training Page
 	@RequestMapping("/farmtrain")
 	public String farmtrain() {
-		
-		
-		
 		return "farmtrain";
 	}
-	
-	
-	//Mapping For Farmer Training Submit Form
+
+	///Mapping For Farmer Training Submit Form
 	@RequestMapping("/trainingsubmit")
 	public String trainingsubmit() {
-		
-	 
-		
-		
 		return "trainingsubmit";
 	}
 	
 	@RequestMapping("/enquiryproduct")
 	public String enquiryproduct()
 	{
-	   
 		return "enquiryproduct";
 	}
-	
-	
-	
-	
-	
-	
-	
-    //Mapping for Student Training Page
+
+	///Mapping for Student Training Page
 		@RequestMapping("/stutrain")
 		public String studenttraining() {
-			
-			
 			return "stutrain";
 	  }
-		
-		
-		//Mapping for Contact Page
+	  ///Mapping for Contact Page
 		@RequestMapping("/contact")
 		public String contact() {
-			
-			
-			
 			return "contact";
 		}
 
-
-	
-	//Mapping for Save Farmer Training form
+	///Mapping for Save Farmer Training form
 	@PostMapping("/ram")
-	public String training_Response(@ModelAttribute("c2") Training_Farmer c2) {
-		
-		
-		fs.submittraining(c2);
-		
-		 return "farmtrain";
+	public String training_Response(@ModelAttribute("c2") TrainingFarmer c2) {
+		farmService.submittraining(c2);
+		return "farmtrain";
 	}
 	
-	
-	//Mappping for Save Student Training form	
+	///Mappping for Save Student Training form
 		@PostMapping("/student")
-		 public String Student_response(@ModelAttribute("c3") Training_Student c3) {
-			 
-			 
-			fs.submitstudentrs(c3);
-			 
+		 public String Student_response(@ModelAttribute("c3") TrainingStudent c3) {
+			farmService.submitstudentrs(c3);
 			return "redirect:/home";
 	 }
-		
-		@RequestMapping("/productsearch")
+
+	    @RequestMapping("/productsearch")
 		public String getproductname(@RequestParam("name")String name,ModelMap mm)
 		{
-			
-		  List<product> pa=sa.findbynameproduct(name);
-		  
-		  mm.addAttribute("kk",pa);
-		  
-		  return "enquiryproduct";
-		  
-			
+			List<Product> pa=adminService.findbynameproduct(name);
+			mm.addAttribute("kk",pa);
+			return "enquiryproduct";
 		}
 		
-		
-		
-		//Mapping for Save Enqiry form
+		///Mapping for Save Enqiry form
 		@PostMapping("/enqiryservice")
-		public String EnquiryDetails(@ModelAttribute("c4") enquiry_Entity c4)
+		public String EnquiryDetails(@ModelAttribute("c4") Enquiry c4)
 		{
-			
-			fs.submitenquiry(c4);
-			
+			farmService.submitenquiry(c4);
 			return "redirect:/farmproduct";
-			
 		}
 		
-		
-		
-		//Mapping for Save Contact Details
+		///Mapping for Save Contact Details
 		@PostMapping("/contact")
-		private String contact(@ModelAttribute ("c4") contact_Entity c4)
+		private String contact(@ModelAttribute ("c4") Contact c4)
 		{
-			fs.contactus(c4);
-			
+			farmService.contactus(c4);
 			return "home";
 		}
 		
-	
-		       
-	
-		
-	
-	//Mapping for Showing Farmer Data
+	///Mapping for Showing Farmer Data
 	@RequestMapping("/farmdisplay")
 	public String showfarmerreq(ModelMap mm)
 	{
-		
-	 List<Training_Farmer> t1=fs.Displayfarmerreq();
-	 
-	 
-	 mm.addAttribute("kk",t1);
-		
-		return "farmdisplay";
+	   List<TrainingFarmer> t1=farmService.Displayfarmerreq();
+	   mm.addAttribute("kk",t1);
+	   return "farmdisplay";
 	}
 	
-	
-    //Mapping for Shwoing Student data
+	///Mapping for Shwoing Student data
 	@RequestMapping("/studisplay")
 	public String showstudentreq(ModelMap m)
 	{
-	 List<Training_Student> t2= fs.Displaystudentreq();
-		
-		 m.addAttribute("kk", t2);
-			 
-		return "studisplay";
+	 List<TrainingStudent> t2= farmService.Displaystudentreq();
+	 m.addAttribute("kk", t2);
+	 return "studisplay";
 	 }
 	
-	
-	
-	  //Mapping for Showing Enqiry
+	 ///Mapping for Showing Enqiry
 		@RequestMapping("/enqirydisplay")
 		public  String showEnqnqiry(ModelMap mm)
 		{
-		List<enquiry_Entity> listen=fs.DisplayEnqiry();
-		
+		List<Enquiry> listen=farmService.DisplayEnqiry();
 		mm.addAttribute("ke",listen);
-			
-			
-			return "enqirydisplay";
+		   return "enqirydisplay";
 		}
 		
-		//Mapping for Soilanalysis Page Mapping
+		///Mapping for Soilanalysis Page Mapping
 		@RequestMapping("/soilfarmer")
 		public String soilanalysisfarmer()
 		{
-			
 			return "soilfarmer";
 		}
-		
-		
-		                                          //Soil Analysis
-		//Save Soil Response
+
+		///Soil Analysis
+		///Save Soil Response
 		@PostMapping("/savesoilresponse")
-		public String savesoilanalysisresponse(@ModelAttribute("c6") soilanalysis_Enitty c6,@RequestParam("semail") String semail,HttpSession h3)
+		public String savesoilanalysisresponse(@ModelAttribute("c6") SoilAnalysis c6, @RequestParam("semail") String semail, HttpSession h3)
 		{
-			
-			
-		soilanalysis_Enitty soil = fs.checksoildublicate(semail);
-		
+			SoilAnalysis soil = farmService.checksoildublicate(semail);
+
 		if(soil==null)
 		{
-		  
-		
-			
-			fs.soilsave(c6);
-			
+			farmService.soilsave(c6);
 			h3.setAttribute("sid", c6.getId());
 			h3.setAttribute("sname", c6.getSname());
 			h3.setAttribute("slocation", c6.getSlocation());
@@ -494,142 +318,59 @@ public class FarmController {
 			h3.setAttribute("scomments", c6.getScomments());
 			
 			return "pdfgenerate";
-		
 		}
-			
-		
-		return "soilaction";
-		
-			
-			
-			
-			
+		 return "soilaction";
 		}
 		
 		@RequestMapping("/soilaction")
 		public String soilrequest()
 		{
-			
 			return "soilaction";
 		}
 		
-		//Redirect PDF page
+		///Redirect PDF page
 		@RequestMapping("/pdfgenerate")
 		public String pdfpage()
 		{
-			
 			return "pdfgenerate";
 		}
 		
-		//Show All Agroagency To Farmer
+		///Show All Agroagency To Farmer
 		@RequestMapping("/farmagroagency")
 		public String agroshowfarmer(ModelMap mm)
 		{
-			
-	   List<agroEntity> a	=sa.getApproveAgro();
-		
-		mm.addAttribute("kk",a);
-			
+			List<Agro> a	=agroService.getApproveAgro();
+			mm.addAttribute("kk",a);
 			return "farmagroagency";
-			
-		 }
-		
-		
-		
-	
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//Mapping for About Page
+	///Mapping for About Page
 	@RequestMapping("/about")
 	public String about() {
-		
-		
 		return "about";
 	}
 	
-	
-	
-	//Mapping for About Page after Login
+	///Mapping for About Page after Login
 	@RequestMapping("/aboutl")
 	public String aboutl() {
-		
-		
-		
 		return "aboutl";
 	}
 	
-	
-	
-	
-	//Mapping For Service Page
+	///Mapping For Service Page
 	@RequestMapping("/service")
 	public String service() {
-		
-		
-		
 		return "service";
 	}
-	
-	
-	
-	
-	
-				
-			
-	
-	
-	
-	//Mapping For Header Nav Bar
+
+	///Mapping For Header Nav Bar
 	@RequestMapping("/headerfile")
 	public String headerfile() {
-		
-		
-		
-		return "headerfile";
+			return "headerfile";
 	}
-	
-	
-	
-	//Mapping For footer Section
+
+	///Mapping For footer Section
 	@RequestMapping("/footer")
 	public String footer() {
-		
-		
-		
-		return "footer";
+	   return "footer";
 	}
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-
 }
