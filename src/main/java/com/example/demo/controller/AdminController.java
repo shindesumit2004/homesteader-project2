@@ -44,7 +44,12 @@ public class AdminController {
 	AgroService agroService;
 	@Autowired
 	AdminService adminService;
-	
+
+	@GetMapping("/demo")
+	public String printDemo(){
+		return "Hello World!!";
+	}
+
 	///Mapping For Admin Login
 	@RequestMapping("/admin")
 	public String AdminLogin()
