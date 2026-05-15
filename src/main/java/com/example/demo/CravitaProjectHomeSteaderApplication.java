@@ -24,3 +24,12 @@ public class CravitaProjectHomeSteaderApplication extends SpringBootServletIniti
 	}
 
 }
+/*
+@SpringBootApplication
+public class CravitaProjectHomeSteaderApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CravitaProjectHomeSteaderApplication.class, args);
+	}
+}
+*/
