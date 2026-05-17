@@ -17,10 +17,10 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("CravitaProject_HomeSteader")
+                        .title("HomeSteaderIndia")
                         .description("By Sumit Shinde")
                 )
-                .servers(Arrays.asList(new Server().url("http://localhost:8080").description("local"),
+                .servers(Arrays.asList(new Server().url("http://localhost:8081").description("local"),
                         new Server().url("https://localhost:8081").description("Live")));
     }
 }

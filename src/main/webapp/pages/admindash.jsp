@@ -134,6 +134,20 @@
 						<h3>Logout</h3>
 					</div></a>
 
+					<a href="addscheme" >
+                        <div class="nav-option option4">
+                            <i class="fa-solid fa-seedling"></i>
+                            <h3>Add Scheme</h3>
+                        </div>
+                    </a>
+
+                    <a href="viewscheme">
+                        <div class="nav-option option4">
+                            <i class="fa-solid fa-list"></i>
+                            <h3>View Schemes</h3>
+                        </div>
+                    </a>
+
 				</div> 
 			</nav> 
 		</div> 
