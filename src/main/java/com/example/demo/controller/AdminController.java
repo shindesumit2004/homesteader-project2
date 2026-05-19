@@ -574,31 +574,4 @@ public class AdminController {
 	}
 
 
-	@GetMapping("/addscheme")
-	public String openAddScheme(Model model) {
-
-		model.addAttribute("scheme", new GovernmentScheme());
-
-		return "addscheme";
-	}
-
-
-
-	@PostMapping("/savescheme")
-	public String saveScheme(@ModelAttribute GovernmentScheme scheme) {
-
-		governmentSchemeService.saveScheme(scheme);
-
-		return "viewscheme";
-	}
-
-
-
-	@GetMapping("/viewscheme")
-	public String viewSchemes(Model model) {
-
-		model.addAttribute("scheme", governmentSchemeService.getAllSchemes());
-
-		return "viewscheme";
-	}
 }

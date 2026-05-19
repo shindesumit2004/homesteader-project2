@@ -134,19 +134,19 @@
 						<h3>Logout</h3>
 					</div></a>
 
-					<a href="addscheme" >
-                        <div class="nav-option option4">
-                            <i class="fa-solid fa-seedling"></i>
-                            <h3>Add Scheme</h3>
-                        </div>
-                    </a>
+				<a href="${pageContext.request.contextPath}/admin/addscheme">
+                    <div class="nav-option">
+                        <i class="fa-solid fa-landmark"></i>
+                        <h3>Add Govt Scheme</h3>
+                    </div>
+                </a>
 
-                    <a href="viewscheme">
-                        <div class="nav-option option4">
-                            <i class="fa-solid fa-list"></i>
-                            <h3>View Schemes</h3>
-                        </div>
-                    </a>
+                <a href="${pageContext.request.contextPath}/admin/viewscheme">
+                    <div class="nav-option">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <h3>View Govt Schemes</h3>
+                    </div>
+                </a>
 
 				</div> 
 			</nav> 

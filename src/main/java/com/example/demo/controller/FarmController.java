@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.service.GovernmentSchemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,8 @@ public class FarmController {
 	private AgroService agroService;
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private GovernmentSchemeService governmentSchemeService;
 
 
 	@RequestMapping("/farm")
@@ -438,5 +442,15 @@ public class FarmController {
 	public String footer() {
 
 		return "footer";
+	}
+
+	@GetMapping("/farmer/viewschemes")
+	public String viewSchemes(Model model)
+	{
+		List<GovernmentScheme> list = governmentSchemeService.getAllSchemes();
+
+		model.addAttribute("list", list);
+
+		return "viewscheme";
 	}
 }

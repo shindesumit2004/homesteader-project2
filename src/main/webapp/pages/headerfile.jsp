@@ -83,6 +83,9 @@
                 <a href="home" class="nav-item nav-link "><i class="fa-solid fa-house"></i>&nbsp;Home</a>
                 <a href="aboutl" class="nav-item nav-link"><i class="fa-solid fa-globe"></i>&nbsp;About</a>
                 <a href="service" class="nav-item nav-link"><i class="fa-solid fa-building"></i>&nbsp;Services</a>
+                <a href="farmer/viewschemes" class="nav-item nav-link">
+                        <i class="fa-solid fa-landmark"></i>&nbsp;Govt Schemes
+                    </a>
                 <a href="farmproduct" class="nav-item nav-link"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Product</a>
                 
                 <a href="contact" class="nav-item nav-link"><i class="fa-solid fa-envelope"></i>&nbsp;Contact</a>
@@ -113,8 +116,247 @@
     }
     
     </style>
-    
-    
-    
-    
-    
+
+<!-- ================= CHATBOT START ================= -->
+
+<!-- CHATBOT ICON -->
+<div id="chatbot-icon">
+    <img src="${pageContext.request.contextPath}/images/chatbot.jpg" alt="Chatbot">
+</div>
+
+<!-- CHATBOT BOX -->
+<div id="chatbot-box">
+
+    <!-- HEADER -->
+    <div id="chat-header">
+        Smart Farming Assistant
+        <span id="close-chat">X</span>
+    </div>
+
+    <!-- CHAT BODY -->
+    <div id="chat-body"></div>
+
+    <!-- FOOTER -->
+    <div id="chat-footer">
+        <input type="text" id="chat-input" placeholder="Type your message...">
+        <button id="send-btn" type="button">Send</button>
+    </div>
+
+</div>
+
+<!-- ================= CSS ================= -->
+
+<style>
+
+/* ICON */
+#chatbot-icon{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #111;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+#chatbot-icon img{
+    width: 32px;
+    height: 32px;
+}
+
+/* CHAT WINDOW */
+#chatbot-box{
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 360px;
+    height: 500px;
+    background: #0f0f0f;
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+}
+
+/* HEADER */
+#chat-header{
+    background: #111;
+    color: #fff;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 1px solid #222;
+}
+
+/* CLOSE BUTTON */
+#close-chat{
+    cursor: pointer;
+    font-size: 22px;
+    color: #ff4d4d;
+}
+
+/* BODY */
+#chat-body{
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background: #0f0f0f;
+}
+
+/* USER MESSAGE */
+.user-msg{
+    background: #1f1f1f;
+    color: #ffffff;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin: 8px 0;
+    margin-left: auto;
+    max-width: 85%;
+    white-space: pre-wrap;
+}
+
+/* BOT MESSAGE */
+.bot-msg{
+    background: #1a1a1a;
+    color: #e6e6e6;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin: 8px 0;
+    max-width: 85%;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+/* FOOTER */
+#chat-footer{
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #222;
+    background: #111;
+}
+
+#chat-input{
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #1a1a1a;
+    color: white;
+    outline: none;
+}
+
+#send-btn{
+    margin-left: 8px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#send-btn:hover{
+    background: #1f7a32;
+}
+
+</style>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+const chatbotIcon = document.getElementById("chatbot-icon");
+const chatbotBox = document.getElementById("chatbot-box");
+const closeChat = document.getElementById("close-chat");
+const chatBody = document.getElementById("chat-body");
+const input = document.getElementById("chat-input");
+const sendBtn = document.getElementById("send-btn");
+
+/* OPEN CHAT */
+chatbotIcon.addEventListener("click", () => {
+    chatbotBox.style.display = "flex";
+
+    if(chatBody.innerHTML.trim() === "") {
+        addMessage("bot", "Hello..!\nHow can I help you with farming?");
+    }
+});
+
+/* CLOSE CHAT */
+closeChat.addEventListener("click", () => {
+    chatbotBox.style.display = "none";
+});
+
+/* SEND */
+sendBtn.addEventListener("click", sendMessage);
+
+input.addEventListener("keypress", (e) => {
+    if(e.key === "Enter") sendMessage();
+});
+
+/* ADD MESSAGE */
+function addMessage(type, text){
+
+    const div = document.createElement("div");
+    div.className = type === "user" ? "user-msg" : "bot-msg";
+
+    div.innerHTML = formatText(text);
+
+    chatBody.appendChild(div);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+/* FORMAT GEMINI STYLE RESPONSE */
+function formatText(text){
+
+    return text
+        .replace(/\n/g, "<br>")
+        .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+        .replace(/- /g, "• ");
+}
+
+/* SEND MESSAGE */
+function sendMessage(){
+
+    let message = input.value.trim();
+    if(message === "") return;
+
+    addMessage("user", message);
+    input.value = "";
+
+    // typing indicator
+    const loading = document.createElement("div");
+    loading.className = "bot-msg";
+    loading.innerHTML = "Typing...";
+    chatBody.appendChild(loading);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+    })
+    .then(res => res.text())
+    .then(data => {
+        loading.remove();
+        addMessage("bot", data);
+    })
+    .catch(() => {
+        loading.innerHTML = "Server not responding.";
+    });
+}
+
+</script>
+
+<!-- ================= CHATBOT END ================= -->

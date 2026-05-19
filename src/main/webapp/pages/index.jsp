@@ -83,6 +83,8 @@
               
                  <a href="stutrain" class="nav-item nav-link" style="margin-left: 700px;"><i class="fa-solid fa-graduation-cap"></i>&nbsp;Agro Student</a>
                  <a href="agro" class="nav-item nav-link"><i class="fa-solid fa-building-wheat"></i>&nbsp;AgroAgency Corner</a>
+                  <a href="farmer/viewschemes" class="nav-item nav-link"><i class="fa-solid fa-landmark"></i>&nbsp;Government Schemes
+                     </a>
             
                 
                
@@ -734,6 +736,8 @@
     
    </style>
    <!-- Endl0 -->
+
+
 </body>
 
 </html>
